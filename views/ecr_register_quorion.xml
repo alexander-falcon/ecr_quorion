@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>  
+
+    <record id="ecr_register_quorion_action" model="ir.actions.act_window">
+        <field name="name">Cash Registers</field>
+        <field name="res_model">ecr.register.quorion</field>
+        <field name="view_mode">form</field>
+    </record>
+
+    <record id="ecr_register_quorion_view_form" model="ir.ui.view">
+        <field name="name">ecr.register.quorion.form</field>
+        <field name="model">ecr.register.quorion</field>
+        <field name="arch" type="xml">
+            <form string="Register Configuration">
+                <sheet>
+                    <div class="oe_title" id="title">
+                        <label for="name" class="oe_edit_only"/>
+                        <h1><field name="name"/></h1>
+                    </div>  
+                    <div class="row mt16 o_settings_container" id="ip_configuration">
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_right_pane">
+                                <label for="ip_address" string="IP address"/>
+                                <div class="text-muted">
+                                    The IP address of the cash register <br/>
+                                    or the IP address of the router if connection is WAN
+                                </div>
+                                <div class="content-group mt16">
+                                    <field name="ip_address"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_right_pane">
+                                <label for="port" string="Port"/>
+                                <div class="text-muted">
+                                    The listening port of the cash register <br/>
+                                    or the listening port of the router if connection is WAN
+                                </div>
+                                <div class="content-group mt16">
+                                    <field name="port"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <notebook colspan="4">                          
+                        <page string="PLU">
+                            <field name="plu_ids" readonly="1">
+                                <tree>
+                                    <field name="date"/>
+                                    <field name="sent"/>
+                                    <field name="maintenance"/>
+                                    <button name="send_plu" type="object" icon="fa-check" string="Send" attrs="{'invisible': [('sent', '=', True)]}"/>
+                                    <button name="unlink" type="object" icon="fa-times" string="Delete" attrs="{'invisible': [('sent', '=', True)]}"/>
+                                </tree>
+                            </field>    
+                        </page>
+                        <page string="Reports">
+                            <field name="report_ids" readonly="1">
+                                <tree>
+                                    <field name="date" />
+                                    <field name="processed" />
+                                    <field name="total_products" />
+                                    <field name="total" />
+                                    <button name="process_report" type="object" icon="fa-check" string="Process" attrs="{'invisible': [('processed', '=', True)]}"/>
+                                    <button name="unlink" type="object" icon="fa-times" string="Delete" attrs="{'invisible': [('processed', '=', True)]}"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Configuration">
+                            <h2>PLU</h2>
+                            <div class="row mt16 o_settings_container">
+                                <div class="col-12 col-lg-6 o_setting_box">
+                                    <div class="o_setting_left_pane">
+                                        <field name="use_scancodes"/>
+                                    </div>
+                                    <div class="o_setting_right_pane">
+                                        <label for="use_scancodes" string="Use Scancodes"/>
+                                        <div class="text-muted mb16">
+                                            Use scancodes for identifying products
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt16 o_settings_container">
+                                <div class="col-12 col-lg-6 o_setting_box">
+                                    <div class="o_setting_right_pane">
+                                        <label for="number_of_plu" string="Number of PLU"/>
+                                        <div class="text-muted">
+                                            Max number of PLU records in the cash register
+                                        </div>
+                                        <div class="content-group mt16">
+                                            <field name="number_of_plu"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-lg-6 o_setting_box">
+                                    <div class="o_setting_right_pane">
+                                        <label for="plu_caption_size" string="PLU Descriptor Size"/>
+                                        <div class="text-muted">
+                                            Max number of characters for product description <br/>
+                                            in the cash register
+                                        </div>
+                                        <div class="content-group mt16">
+                                            <field name="plu_caption_size"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>                         
+                            <h2>Numbers format</h2>
+                            <div class="row mt16 o_settings_container">
+                                <div class="col-12 col-lg-6 o_setting_box">
+                                    <div class="o_setting_right_pane">
+                                        <label for="decimal_separator" string="Decimal Separator"/>
+                                        <div class="text-muted">
+                                            Character used for separating decimals in the cash register
+                                        </div>
+                                        <div class="content-group mt16">
+                                            <field name="decimal_separator"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-lg-6 o_setting_box">
+                                    <div class="o_setting_right_pane">
+                                        <label for="thousands_separator" string="Thousands Separator"/>
+                                        <div class="text-muted">
+                                            Character used for separating thousands in the cash register
+                                        </div>
+                                        <div class="content-group mt16">
+                                            <field name="thousands_separator"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <h2>Reports</h2>
+                            <div class="row mt16 o_settings_container">
+                                <div class="col-12 col-lg-6 o_setting_box">
+                                    <div class="o_setting_right_pane">
+                                        <label for="sales_report_X" string="Sales Report (X)"/>
+                                        <div class="text-muted">
+                                            Command used to get sales report <br/>
+                                            from the cash register (X type)
+                                        </div>
+                                        <div class="content-group mt16">
+                                            <field name="sales_report_X"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-lg-6 o_setting_box">
+                                    <div class="o_setting_right_pane">
+                                        <label for="income_report_X" string="Income Report (X)"/>
+                                        <div class="text-muted">
+                                            Command used to get income report <br/>
+                                            from the cash register (X type)
+                                        </div>
+                                        <div class="content-group mt16">
+                                            <field name="income_report_X"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <h2>Payment Methods</h2>
+                            <div class="row mt16 o_settings_container">
+                                <div class="col-12 col-lg-6 o_setting_box">
+                                    <div class="o_setting_right_pane">
+                                        <label for="payment_ids" string="Payment Methods Codes"/>
+                                        <div class="text-muted">
+                                            Codes used for identifying payment media <br/>
+                                            in the cash register
+                                        </div>
+                                        <div class="content-group mt16">
+                                            <field name="payment_ids" nolabel="1">
+                                                <tree>
+                                                    <field name="code"/>
+                                                    <field name="payment_id"/>
+                                                </tree>
+                                            </field>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <h2>Departments</h2>                         
+                            <div class="row mt16 o_settings_container">
+                                <div class="col-12 col-lg-6 o_setting_box">
+                                    <div class="o_setting_right_pane">
+                                        <label for="number_of_departments" string="Number of Departments"/>
+                                        <div class="text-muted">
+                                            Max number of departments records in the cash register
+                                        </div>
+                                        <div class="content-group mt16">
+                                            <field name="number_of_departments"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-lg-6 o_setting_box">
+                                    <div class="o_setting_right_pane">
+                                        <label for="department_caption_size" string="Department Descriptor Size"/>
+                                        <div class="text-muted">
+                                            Max number of characters for department description <br/>
+                                            in the cash register
+                                        </div>
+                                        <div class="content-group mt16">
+                                            <field name="department_caption_size"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-lg-6 o_setting_box">
+                                    <div class="o_setting_right_pane">
+                                        <label for="department_ids" string="Departments Codes"/>
+                                        <div class="text-muted">
+                                            Codes used for identifying departments <br/>
+                                            in the cash register
+                                        </div>
+                                        <div class="content-group mt16">
+                                            <field name="department_ids" nolabel="1">
+                                                <tree>
+                                                    <field name="code"/>
+                                                    <field name="category_id"/>
+                                                </tree>
+                                            </field>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+</odoo>

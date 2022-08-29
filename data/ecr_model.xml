@@ -1,0 +1,10 @@
+<odoo>
+    <data>
+
+        <record model="ecr.model" id="ecr_quorion_model">
+          <field name="name">Quorion</field>
+          <field name="odoo_model">ecr.register.quorion</field>
+        </record>
+
+    </data>
+</odoo>
